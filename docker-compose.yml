@@ -1,0 +1,39 @@
+services:
+  web:
+    image: php:8.2-apache
+    container_name: jobconnect-web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: job_recruitment
+      DB_USER: root
+      DB_PASS: root
+    command: >
+      bash -c "docker-php-ext-install pdo pdo_mysql
+      && apache2-foreground"
+
+  db:
+    image: mysql:8.0
+    container_name: jobconnect-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: job_recruitment
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/01-database.sql:ro
+      - jobconnect_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  jobconnect_mysql_data:

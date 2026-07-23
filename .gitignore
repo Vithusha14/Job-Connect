@@ -1,0 +1,27 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.log
+
+# Environment / secrets (keep config.php in repo with local defaults)
+.env
+.env.local
+
+# Dependencies (if any local tools installed)
+node_modules/
+vendor/
+
+# Uploaded user files (keep folder structure via .gitkeep)
+uploads/resumes/*
+!uploads/resumes/.gitkeep
+!uploads/resumes/.htaccess
+uploads/photos/*
+!uploads/photos/.gitkeep
+uploads/logos/*
+!uploads/logos/.gitkeep
+
+# Docker volume leftovers
+*.sql.gz
