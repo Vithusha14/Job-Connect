@@ -1,4 +1,4 @@
-# JobConnect — Online Job Recruitment System
+# JobConnect - Online Job Recruitment System
 
 A full-stack academic web application that connects **Job Seekers (Candidates)**, **Employers/Recruiters**, and an **Administrator**.
 
