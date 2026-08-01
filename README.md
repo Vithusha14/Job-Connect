@@ -1,7 +1,6 @@
 # JobConnect — Online Job Recruitment System
 
-A full-stack academic web application that connects **Job Seekers (Candidates)**, **Employers/Recruiters**, and an **Administrator**.  
-Repository: [https://github.com/Vithusha14/Job-Connect](https://github.com/Vithusha14/Job-Connect)
+A full-stack academic web application that connects **Job Seekers (Candidates)**, **Employers/Recruiters**, and an **Administrator**.
 
 ---
 
@@ -12,7 +11,7 @@ JobConnect is a modern, responsive online job portal similar in idea to LinkedIn
 | Item | Detail |
 |------|--------|
 | Project name | JobConnect (Online Job Recruitment System) |
-| Architecture | Traditional multi-page PHP app (server-rendered) |
+| Architecture | Next.js frontend + Laravel JSON API (+ classic PHP pages) |
 | Users | Candidate, Employer, Admin |
 | Branching | `main` (default) · `develop` (active development) |
 
@@ -20,25 +19,26 @@ JobConnect is a modern, responsive online job portal similar in idea to LinkedIn
 
 ## 2. Languages & Tech Stack
 
-### Frontend
+### Frontend (Next.js — primary UI)
 | Technology | Purpose |
 |------------|---------|
-| **HTML5** | Page structure and semantic markup |
-| **CSS3** | Layout (Flexbox / Grid), blue theme, responsive design |
-| **JavaScript (Vanilla)** | Client-side form validation, mobile nav, custom confirm modals, chart animations |
-| **Font Awesome 6** | Icons (CDN) |
-| **Google Fonts** | DM Sans + Outfit |
+| **Next.js 14** (React 18) | App Router pages, client components, routing |
+| **TypeScript** | Typed frontend code |
+| **CSS3** | Blue theme & responsive layout (`frontend/src/app/globals.css`) |
 
-No React, Vue, Angular, or other frontend frameworks.
+Folder: `frontend/` → run with `npm run dev` on port **3000**.
 
-### Backend
+### Classic Frontend (still available)
+Original PHP-rendered pages (HTML/CSS/vanilla JS) still work on port **8080** if needed.
+
+### Backend (Laravel — primary API)
 | Technology | Purpose |
 |------------|---------|
-| **PHP 7.4+ / 8.x** | Server logic, sessions, file uploads, role-based access |
-| **PDO** | Secure MySQL access with prepared statements |
-| **Apache** | Web server (XAMPP / WAMP / Laragon / Docker) |
+| **Laravel 13** (PHP 8.4) | JSON REST API under `backend/` → port **8000** |
+| **Eloquent + PDO** | Models mapped to existing MySQL tables |
+| **HMAC Bearer tokens** | API auth compatible with the Next.js client |
 
-No Laravel, CodeIgniter, or other heavy PHP frameworks.
+Classic PHP pages + legacy `api/` scripts still run on port **8080** if needed.
 
 ### Database
 | Technology | Purpose |
@@ -83,33 +83,22 @@ No Laravel, CodeIgniter, or other heavy PHP frameworks.
 
 ```
 Job-Connect/
-├── admin/                 # Admin panel (dashboard, users, jobs, categories)
-├── candidate/             # Candidate dashboard, profile, applications, bookmarks
-├── employer/              # Employer dashboard, post/edit jobs, applicants
+├── backend/               # Laravel 13 JSON API (port 8000)
+│   ├── app/Http/Controllers/Api/
+│   ├── app/Models/
+│   ├── routes/api.php
+│   └── Dockerfile
+├── frontend/              # Next.js 14 UI (port 3000)
+├── api/                   # Legacy plain-PHP JSON API (optional)
+├── admin/                 # Classic PHP admin panel
+├── candidate/             # Classic PHP candidate pages
+├── employer/              # Classic PHP employer pages
 ├── assets/
-│   ├── css/style.css      # Global styles & theme
-│   ├── js/main.js         # Validation, modals, UI helpers
-│   └── images/            # Default avatar / company SVG placeholders
 ├── includes/
-│   ├── config.php         # DB credentials & app constants
-│   ├── db.php             # PDO connection
-│   ├── functions.php      # Auth helpers, uploads, flash messages
-│   ├── init.php           # Bootstrap for every page
-│   ├── header.php         # Shared navbar
-│   └── footer.php         # Shared footer
 ├── uploads/
-│   ├── resumes/           # Candidate PDF resumes
-│   ├── photos/            # Candidate profile photos
-│   └── logos/             # Employer logos
-├── database.sql           # CREATE DATABASE + tables + seed data
-├── docker-compose.yml     # Optional Docker setup
-├── index.php              # Landing / home page
-├── jobs.php               # Public job listings
-├── job-details.php        # Job detail + apply / bookmark
-├── login.php              # Login
-├── register.php           # Candidate / Employer registration
-├── logout.php             # Session destroy
-└── README.md              # This file
+├── database.sql
+├── docker-compose.yml     # web (8080) + laravel (8000) + mysql (3307)
+└── README.md
 ```
 
 ---
@@ -180,7 +169,7 @@ Import this single file in phpMyAdmin (or MySQL CLI). It creates everything need
 
 ### Step 1 — Clone the repository
 ```bash
-git clone https://github.com/Vithusha14/Job-Connect.git
+git clone <your-repo-url>
 cd Job-Connect
 ```
 
@@ -213,15 +202,38 @@ http://localhost/Job-Connect/
 
 ---
 
-## 9. Setup with Docker (optional)
+## 9. Setup with Docker + Next.js (recommended)
 
+### Terminal 1 — Laravel API + MySQL (+ classic PHP)
 ```bash
 docker compose up -d
 ```
+- **Laravel API:** http://localhost:8000/api/  
+- Classic PHP site / uploads: http://localhost:8080/  
+- MySQL host port: `3307` (user `root` / password `root`)
 
-App URL: [http://localhost:8080/](http://localhost:8080/)  
-MySQL is available on host port `3307` (user `root` / password `root`).
+Quick check:
+```bash
+curl http://localhost:8000/api/home
+```
 
+### Terminal 2 — Next.js frontend
+```bash
+cd frontend
+copy .env.local.example .env.local
+npm install
+npm run dev
+```
+Open: **http://localhost:3000**
+
+`.env.local` should point at Laravel:
+```
+NEXT_PUBLIC_API_BASE=http://localhost:8000
+NEXT_PUBLIC_UPLOAD_BASE=http://localhost:8080
+```
+
+> If `npm install` fails (network/SSL), fix npm registry access on your PC, then retry.
+> After changing Laravel PHP code under `backend/app`, rebuild is not needed (source is mounted). After `composer install` / vendor changes, run `docker compose build laravel && docker compose up -d laravel`.
 ---
 
 ## 10. Git Workflow
