@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JobConnect — Complete Project Guide</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #212121;
+    line-height: 1.55;
+    font-size: 11pt;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #fff;
+  }
+  h1 { color: #0D47A1; font-size: 22pt; margin: 0 0 8px; border-bottom: 3px solid #1976D2; padding-bottom: 8px; }
+  h2 { color: #0D47A1; font-size: 14pt; margin-top: 28px; border-left: 4px solid #1976D2; padding-left: 10px; page-break-after: avoid; }
+  h3 { color: #1565C0; font-size: 12pt; margin-top: 18px; page-break-after: avoid; }
+  p, li { margin: 6px 0; }
+  .subtitle { color: #616161; font-size: 11pt; margin-bottom: 20px; }
+  .meta { background: #E3F2FD; border: 1px solid #90CAF9; border-radius: 8px; padding: 12px 14px; margin: 16px 0; }
+  .meta table { width: 100%; border-collapse: collapse; }
+  .meta td { padding: 4px 8px; vertical-align: top; }
+  .meta td:first-child { font-weight: 700; width: 160px; color: #0D47A1; }
+  table.data { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 10pt; }
+  table.data th, table.data td { border: 1px solid #CFD8DC; padding: 7px 8px; text-align: left; }
+  table.data th { background: #E3F2FD; color: #0D47A1; }
+  table.data tr:nth-child(even) td { background: #FAFCFF; }
+  .ok { color: #2E7D32; font-weight: 700; }
+  .partial { color: #F9A825; font-weight: 700; }
+  code, pre {
+    font-family: Consolas, "Courier New", monospace;
+    background: #F5F7FA;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+  }
+  code { padding: 1px 5px; font-size: 9.5pt; }
+  pre { padding: 12px; overflow-x: auto; font-size: 9.5pt; line-height: 1.45; page-break-inside: avoid; }
+  .box {
+    border: 1px solid #BBDEFB;
+    background: #F5FAFF;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+  }
+  .warn {
+    border-color: #FFE082;
+    background: #FFFDE7;
+  }
+  .toc a { color: #1565C0; text-decoration: none; }
+  .toc li { margin: 4px 0; }
+  .footer-note { margin-top: 36px; padding-top: 12px; border-top: 1px solid #E0E0E0; color: #757575; font-size: 9.5pt; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li::before { content: "✓ "; color: #2E7D32; font-weight: 700; }
+  @media print {
+    body { padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    h2 { page-break-before: auto; }
+  }
+</style>
+</head>
+<body>
+
+<h1>JobConnect — Complete Project Guide</h1>
+<p class="subtitle">
+  Online Job Recruitment System · Beginner-friendly review, features checklist, install &amp; run guide<br>
+  For students / new developers who are opening this project for the first time
+</p>
+
+<div class="meta">
+  <table>
+    <tr><td>Project title</td><td>Online Job Recruitment (JobConnect)</td></tr>
+    <tr><td>Type</td><td>Web application / website</td></tr>
+    <tr><td>Methodology</td><td>Agile (modular folders map to SRS / use cases / test plan)</td></tr>
+    <tr><td>Frontend</td><td>HTML5, CSS3, JavaScript (vanilla — no React/Vue)</td></tr>
+    <tr><td>Backend</td><td>PHP (procedural + helpers, PDO)</td></tr>
+    <tr><td>Database</td><td>MySQL (`database.sql`)</td></tr>
+    <tr><td>Theme</td><td>Professional blue (`#0D47A1`, `#1565C0`, `#1976D2`)</td></tr>
+    <tr><td>Runs in</td><td>Any modern web browser</td></tr>
+    <tr><td>GitHub</td><td>Project repository (clone from your Git remote)</td></tr>
+  </table>
+</div>
+
+<h2>1. What is this project? (Simple explanation)</h2>
+<p>
+  Imagine a small version of LinkedIn Jobs / Naukri / Indeed.
+  Three types of people use the website:
+</p>
+<ol>
+  <li><strong>Candidate</strong> — looks for jobs, uploads resume, applies, tracks status</li>
+  <li><strong>Employer</strong> — posts jobs, reviews applicants, updates application status</li>
+  <li><strong>Admin</strong> — controls the whole system (users, job approvals, categories, stats)</li>
+</ol>
+<p>
+  This is <strong>not</strong> a React app with separate API servers.
+  It is a classic <strong>PHP website</strong>: when you open a page, PHP talks to MySQL on the server,
+  builds the HTML, and sends the finished page to your browser.
+  That is why the Network tab often shows no XHR/fetch “API” calls — the data is already inside the HTML.
+</p>
+
+<h2>2. How the Frontend works</h2>
+<h3>What is frontend here?</h3>
+<p>Everything the user sees and clicks in the browser:</p>
+<ul>
+  <li><code>*.php</code> pages output HTML structure</li>
+  <li><code>assets/css/style.css</code> — colors, layout, responsive design (Flexbox/Grid)</li>
+  <li><code>assets/js/main.js</code> — mobile menu, form validation, custom confirm dialogs</li>
+  <li>Font Awesome icons + Google Fonts (loaded from CDN)</li>
+</ul>
+<h3>Main public screens</h3>
+<table class="data">
+  <tr><th>Page</th><th>What it does</th></tr>
+  <tr><td><code>index.php</code></td><td>Landing page: hero search, featured jobs, categories, how it works</td></tr>
+  <tr><td><code>jobs.php</code></td><td>Browse/search/filter all approved jobs</td></tr>
+  <tr><td><code>job-details.php</code></td><td>Full job description, apply, bookmark</td></tr>
+  <tr><td><code>login.php</code> / <code>register.php</code></td><td>Sign in / create candidate or employer account</td></tr>
+</table>
+<h3>Role dashboards (after login)</h3>
+<table class="data">
+  <tr><th>Folder</th><th>Pages</th></tr>
+  <tr><td><code>candidate/</code></td><td>dashboard, profile, applications, bookmarks</td></tr>
+  <tr><td><code>employer/</code></td><td>dashboard, profile, post-job, manage-jobs, edit-job, applicants</td></tr>
+  <tr><td><code>admin/</code></td><td>dashboard, manage-users, manage-jobs, manage-categories</td></tr>
+</table>
+<p>
+  Shared UI pieces live in <code>includes/header.php</code> and <code>includes/footer.php</code>
+  so every page looks consistent.
+</p>
+
+<h2>3. How the Backend works</h2>
+<p>Backend = PHP code that runs on the server before HTML is shown.</p>
+<table class="data">
+  <tr><th>File</th><th>Job</th></tr>
+  <tr><td><code>includes/config.php</code></td><td>Database host, name, user, password, upload limits</td></tr>
+  <tr><td><code>includes/db.php</code></td><td>Creates PDO MySQL connection</td></tr>
+  <tr><td><code>includes/functions.php</code></td><td>Login checks, flash messages, file upload helpers, CSRF</td></tr>
+  <tr><td><code>includes/init.php</code></td><td>Starts session + loads helpers on every page</td></tr>
+</table>
+<h3>Request flow (example: Apply to a job)</h3>
+<ol>
+  <li>Candidate opens <code>job-details.php?id=1</code></li>
+  <li>PHP loads job from MySQL and shows the page</li>
+  <li>Candidate clicks Apply → form POSTs to same page</li>
+  <li>PHP checks login role, CSRF token, resume exists</li>
+  <li>PHP inserts a row into <code>applications</code> table</li>
+  <li>User is redirected to Applications list with a success message</li>
+</ol>
+<h3>Security built in</h3>
+<ul class="check">
+  <li>Passwords hashed with <code>password_hash()</code></li>
+  <li>SQL via PDO prepared statements (helps stop SQL injection)</li>
+  <li>Session login + role checks (candidate/employer/admin)</li>
+  <li>CSRF tokens on important forms</li>
+  <li>Upload validation (PDF resume, image photo/logo, size limits)</li>
+</ul>
+
+<h2>4. Database (`database.sql`) explained</h2>
+<p>
+  <code>database.sql</code> is the “blueprint + sample data” file.
+  Import it once into MySQL. It creates database <strong>job_recruitment</strong> and all tables.
+</p>
+<table class="data">
+  <tr><th>Table</th><th>Stores</th></tr>
+  <tr><td><code>users</code></td><td>Login email, password hash, role, active/blocked</td></tr>
+  <tr><td><code>candidates</code></td><td>Job seeker profile, skills, resume file name</td></tr>
+  <tr><td><code>employers</code></td><td>Company name, logo, industry, address</td></tr>
+  <tr><td><code>categories</code></td><td>Job categories (IT, Sales, HR, …)</td></tr>
+  <tr><td><code>jobs</code></td><td>Job posts (title, salary, location, approval status)</td></tr>
+  <tr><td><code>applications</code></td><td>Who applied to which job + status</td></tr>
+  <tr><td><code>bookmarks</code></td><td>Jobs saved by candidates</td></tr>
+</table>
+<div class="box warn">
+  <strong>Seed password for demo users:</strong> <code>password</code><br>
+  Demo emails exist only inside the database for testing (login page no longer lists them).
+</div>
+
+<h2>5. Requirements checklist — is the project complete?</h2>
+<p>Compared with your project brief (Agile web app, HTML/JS/CSS + PHP + MySQL, blue theme):</p>
+<table class="data">
+  <tr><th>Required item</th><th>Status</th><th>Where</th></tr>
+  <tr><td>Web application / website</td><td class="ok">COMPLETE</td><td>Whole project</td></tr>
+  <tr><td>Agile-friendly modular structure</td><td class="ok">COMPLETE</td><td>candidate / employer / admin folders</td></tr>
+  <tr><td>Runs in any browser</td><td class="ok">COMPLETE</td><td>Standard HTML/CSS/JS</td></tr>
+  <tr><td>Frontend: HTML, CSS, JavaScript</td><td class="ok">COMPLETE</td><td>Pages + assets/</td></tr>
+  <tr><td>Backend: PHP</td><td class="ok">COMPLETE</td><td>All .php files</td></tr>
+  <tr><td>Database: MySQL + SQL file</td><td class="ok">COMPLETE</td><td>database.sql</td></tr>
+  <tr><td>Blue color design</td><td class="ok">COMPLETE</td><td>style.css theme</td></tr>
+  <tr><td>Candidate register/login/profile/apply/bookmark</td><td class="ok">COMPLETE</td><td>candidate/</td></tr>
+  <tr><td>Employer post/manage jobs + applicants</td><td class="ok">COMPLETE</td><td>employer/</td></tr>
+  <tr><td>Admin users/jobs/categories/stats</td><td class="ok">COMPLETE</td><td>admin/</td></tr>
+  <tr><td>Responsive UI</td><td class="ok">COMPLETE</td><td>CSS media queries</td></tr>
+  <tr><td>Security (hashing, PDO, sessions)</td><td class="ok">COMPLETE</td><td>includes/</td></tr>
+  <tr><td>SRS / Gantt / Use-case docs as separate files</td><td class="partial">NOT IN CODE</td><td>Prepare in Word/Draw.io for submission (code is ready to map to them)</td></tr>
+</table>
+<p><strong>Verdict:</strong> The software application features are complete and demo-ready. Separate academic documents (SRS, Gantt chart, use-case diagram, test plan) are normally written outside the code and attached to your report — the code structure already supports those diagrams.</p>
+
+<h2>6. Full feature summary by role</h2>
+<h3>Candidate</h3>
+<ul class="check">
+  <li>Register &amp; login</li>
+  <li>Edit profile (photo, skills, education, experience, PDF resume)</li>
+  <li>Search/filter jobs</li>
+  <li>Apply + track Pending/Shortlisted/Rejected/Selected</li>
+  <li>Bookmark jobs</li>
+  <li>Dashboard stats</li>
+</ul>
+<h3>Employer</h3>
+<ul class="check">
+  <li>Company profile + logo</li>
+  <li>Post job (needs admin approval)</li>
+  <li>Edit / close / delete jobs</li>
+  <li>View applicants &amp; resumes</li>
+  <li>Update applicant status</li>
+  <li>Dashboard stats</li>
+</ul>
+<h3>Admin</h3>
+<ul class="check">
+  <li>Stats dashboard + charts</li>
+  <li>Block/delete users</li>
+  <li>Approve/reject/close/delete jobs</li>
+  <li>Manage categories</li>
+</ul>
+
+<h2>7. How to install &amp; run (for a new person)</h2>
+
+<h3>Option A — XAMPP (most common for college projects)</h3>
+<ol>
+  <li>Install <strong>XAMPP</strong> and start <strong>Apache</strong> + <strong>MySQL</strong></li>
+  <li>Copy/clone project into <code>C:\xampp\htdocs\Job-Connect</code></li>
+  <li>Open phpMyAdmin → Import → select <code>database.sql</code> → Go</li>
+  <li>Open browser: <code>http://localhost/Job-Connect/</code></li>
+</ol>
+<pre>git clone &lt;your-repo-url&gt;
+# then move/copy into htdocs if needed</pre>
+<p>DB settings (usually already correct) in <code>includes/config.php</code>:</p>
+<pre>DB_HOST = localhost
+DB_NAME = job_recruitment
+DB_USER = root
+DB_PASS = (empty on default XAMPP)</pre>
+<div class="box">
+  <strong>Important:</strong> In this project there is <em>no separate</em> “npm start frontend” and “npm start backend”.
+  Apache runs PHP pages. Frontend CSS/JS are just static files served with those pages.
+</div>
+
+<h3>Option B — Docker (if you already have Docker Desktop)</h3>
+<p>From the project folder:</p>
+<pre>docker compose up -d</pre>
+<p>Then open:</p>
+<pre>http://localhost:8080/</pre>
+<p>Useful Docker commands:</p>
+<pre># See running containers
+docker compose ps
+
+# View web logs
+docker compose logs -f web
+
+# Stop everything
+docker compose down
+
+# Stop and delete database volume (full reset)
+docker compose down -v
+docker compose up -d</pre>
+<p>Docker MySQL (from your PC): host <code>127.0.0.1</code>, port <code>3307</code>, user <code>root</code>, password <code>root</code>, database <code>job_recruitment</code>.</p>
+
+<h2>8. How to check `database.sql` and the data</h2>
+
+<h3>A) Read the SQL file in the project</h3>
+<p>Open <code>database.sql</code> in VS Code / Cursor. You will see:</p>
+<ul>
+  <li><code>CREATE DATABASE</code> / <code>CREATE TABLE</code> statements</li>
+  <li><code>INSERT INTO</code> sample users, jobs, applications</li>
+</ul>
+
+<h3>B) Check data in phpMyAdmin (XAMPP)</h3>
+<ol>
+  <li>Go to <code>http://localhost/phpmyadmin</code></li>
+  <li>Click database <strong>job_recruitment</strong></li>
+  <li>Open tables: <code>users</code>, <code>jobs</code>, <code>applications</code>, …</li>
+  <li>Click <strong>Browse</strong> to see rows</li>
+</ol>
+
+<h3>C) Check data with Docker MySQL commands</h3>
+<pre>docker exec -it jobconnect-db mysql -uroot -proot job_recruitment
+
+# Inside MySQL:
+SHOW TABLES;
+SELECT id, email, role, status FROM users;
+SELECT id, title, location, status FROM jobs;
+SELECT id, job_id, candidate_id, status FROM applications;
+EXIT;</pre>
+
+<p>One-line examples without entering MySQL shell:</p>
+<pre>docker exec jobconnect-db mysql -uroot -proot job_recruitment -e "SHOW TABLES;"
+docker exec jobconnect-db mysql -uroot -proot job_recruitment -e "SELECT id,title,location,status FROM jobs;"
+docker exec jobconnect-db mysql -uroot -proot job_recruitment -e "SELECT id,email,role FROM users;"</pre>
+
+<h2>9. How to test the website quickly</h2>
+<ol>
+  <li>Open home page → search jobs</li>
+  <li>Register a new candidate OR login with seed user</li>
+  <li>Upload resume in profile → apply to a job</li>
+  <li>Login as employer → open Applicants → change status</li>
+  <li>Login as admin → approve a pending job, view charts</li>
+</ol>
+<div class="box">
+  <strong>Seed login password (database demo users):</strong> <code>password</code><br>
+  Examples: <code>admin@jobconnect.com</code> · <code>rahul.sharma@email.com</code> · <code>hr@techvista.com</code>
+</div>
+
+<h2>10. Project architecture diagram (simple)</h2>
+<pre>
+  Browser (HTML/CSS/JS)
+           |
+           | HTTP request
+           v
+  Apache + PHP pages
+           |
+           | PDO SQL
+           v
+     MySQL database
+   (job_recruitment)
+</pre>
+
+<h2>11. Folder map (one glance)</h2>
+<pre>
+Job-Connect/
+  admin/          Admin panel
+  candidate/      Job seeker area
+  employer/       Company/recruiter area
+  assets/         CSS, JS, images
+  includes/       Shared PHP (config, DB, header, footer)
+  uploads/        User uploaded resumes/photos/logos
+  database.sql    Schema + seed data
+  docker-compose.yml
+  index.php       Home
+  README.md       Short setup readme
+</pre>
+
+<div class="footer-note">
+  Generated for JobConnect academic project · Blue-themed PHP/MySQL recruitment system ·
+  Print this page to PDF: Browser → Ctrl+P → Destination “Save as PDF”.
+</div>
+
+</body>
+</html>

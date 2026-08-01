@@ -12,6 +12,9 @@ Thumbs.db
 
 # Dependencies (if any local tools installed)
 node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
 vendor/
 
 # Uploaded user files (keep folder structure via .gitkeep)
