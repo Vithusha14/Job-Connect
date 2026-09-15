@@ -47,7 +47,7 @@ export default function HomePage() {
     <>
       <section className="hero">
         <div className="container">
-          <div className="hero-brand">JobConnect</div>
+          <div className="hero-brand"><span>JobConnect</span></div>
           <h1>Find work that fits your future</h1>
           <p>Search openings from trusted employers. Build your profile, apply in one click, and track every application.</p>
           <form className="hero-search" onSubmit={onSearch}>

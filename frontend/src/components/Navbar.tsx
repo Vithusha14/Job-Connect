@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link href="/" className="logo">
+        <Link href="/" className="logo" aria-label="JobConnect home">
           <span className="logo-mark">JC</span>
           <span>JobConnect</span>
         </Link>
