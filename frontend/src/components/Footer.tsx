@@ -5,11 +5,11 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <div className="logo" style={{ color: '#fff', marginBottom: '0.75rem' }}>
+          <div className="logo" style={{ marginBottom: '0.75rem' }}>
             <span className="logo-mark">JC</span>
             <span>JobConnect</span>
           </div>
-          <p>Connecting talented professionals with great companies.</p>
+          <p>Where talent meets opportunity — built for candidates, employers, and teams that hire with clarity.</p>
         </div>
         <div>
           <h4>Quick Links</h4>
