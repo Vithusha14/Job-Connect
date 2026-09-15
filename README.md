@@ -24,7 +24,7 @@ JobConnect is a modern, responsive online job portal similar in idea to LinkedIn
 |------------|---------|
 | **Next.js 14** (React 18) | App Router pages, client components, routing |
 | **TypeScript** | Typed frontend code |
-| **CSS3** | Blue theme & responsive layout (`frontend/src/app/globals.css`) |
+| **CSS3** | Teal + amber professional theme (`frontend/src/app/globals.css`) |
 
 Folder: `frontend/` → run with `npm run dev` on port **3000**.
 
@@ -130,23 +130,56 @@ Import this single file in phpMyAdmin (or MySQL CLI). It creates everything need
 - `applications` → `jobs` + `candidates` (unique pair)
 - `bookmarks` → `candidates` + `jobs` (unique pair)
 
-### 5.4 Seed / sample data included
-- **1 admin**, **3 candidates**, **2 employers**
-- **8 categories** (IT, Marketing, Finance, HR, Sales, Healthcare, Education, Design)
-- **Multiple approved jobs** + sample applications and bookmarks
-- Seed password for all demo users: **`password`** (bcrypt hashed in SQL)
+### 5.4 Seed / sample data included (Sri Lanka + UK)
+- **1 admin**, **5 candidates**, **4 employers**
+- Employers: **LankaCode Technologies** & **Ceylon Trade Partners** (Colombo) · **Thames Digital Ltd** (London) · **Northern Peak Consulting** (Manchester)
+- Candidates in **Colombo / Kandy / Galle** and **London / Manchester**
+- Jobs in Colombo, Kandy, Galle, London, Manchester (LKR monthly for LK roles; GBP annual for UK roles)
+- **8 categories** + approved jobs + a few pending + sample applications/bookmarks
+- Seed password for all demo users: **`password`**
 
-> Note: Demo credentials are for local/academic testing only. Do not expose them on a public production site.
+### 5.5 Demo accounts (password: `password`)
+
+| Role | Email |
+|------|--------|
+| Admin | `admin@jobconnect.com` |
+| Candidate (Colombo) | `nimal.perera@email.com` |
+| Candidate (Kandy) | `ishara.fernando@email.com` |
+| Candidate (Galle) | `dilani.jayasinghe@email.com` |
+| Candidate (Manchester) | `james.walker@email.com` |
+| Candidate (London) | `emma.collins@email.com` |
+| Employer (LK) | `hr@lankacode.lk` |
+| Employer (LK) | `careers@ceylontrade.lk` |
+| Employer (UK) | `recruitment@thamesdigital.co.uk` |
+| Employer (UK) | `jobs@northernpeak.co.uk` |
+
+> Demo credentials are for local/academic testing only.
+
+### 5.6 Refresh Docker MySQL so new seed loads
+Docker only imports `database.sql` **the first time** the MySQL volume is created. After changing seed data:
+
+```bash
+# WARNING: deletes MySQL data volume, then recreates DB from database.sql
+docker compose down -v
+docker compose up -d
+```
+
+Check data:
+```bash
+docker exec -it jobconnect-db mysql -uroot -proot job_recruitment -e "SELECT id, company_name, address FROM employers; SELECT id, title, location, status FROM jobs;"
+```
+
+Without Docker (XAMPP): drop/recreate `job_recruitment` in phpMyAdmin, then Import `database.sql`.
 
 ---
 
 ## 6. Frontend Details
 
 - **Responsive** layouts for mobile, tablet, and desktop
-- **Blue theme:** `#0D47A1`, `#1565C0`, `#1976D2`, accent `#E3F2FD`
-- Landing page: hero search, featured jobs, categories, how-it-works, CTA
-- Shared header / footer includes
-- Custom confirm modal (replaces browser `confirm()`)
+- **Theme:** deep teal (`#0F766E`) + amber CTA (`#D97706`) on off-white (`#F8FAFC`)
+- Typography: **Sora** (headings) + **Source Sans 3** (body)
+- Landing page: brand hero, search, featured jobs, categories
+- Shared Navbar / Footer; auth + role dashboards use the same tokens
 - Flash success / error / warning alerts
 
 ---
