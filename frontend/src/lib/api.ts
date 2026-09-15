@@ -83,10 +83,11 @@ export async function apiFetch<T = unknown>(path: string, options: ApiOptions = 
 export function formatSalary(min?: number | string | null, max?: number | string | null): string {
   const a = min != null && min !== '' ? Number(min) : null;
   const b = max != null && max !== '' ? Number(max) : null;
+  // Numeric ranges only — currency depends on job location (LKR monthly / GBP annual in seed data)
   if (a == null && b == null) return 'Not disclosed';
-  if (a != null && b != null) return `₹${a.toLocaleString()} - ₹${b.toLocaleString()}`;
-  if (a != null) return `From ₹${a.toLocaleString()}`;
-  return `Up to ₹${Number(b).toLocaleString()}`;
+  if (a != null && b != null) return `${a.toLocaleString()} – ${b.toLocaleString()}`;
+  if (a != null) return `From ${a.toLocaleString()}`;
+  return `Up to ${Number(b).toLocaleString()}`;
 }
 
 export function formatDate(value?: string | null): string {
