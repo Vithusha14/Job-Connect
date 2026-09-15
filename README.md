@@ -1,4 +1,4 @@
-# JobConnect — Online Job Recruitment System
+# JobConnect - Online Job Recruitment System
 
 A full-stack academic web application that connects **Job Seekers (Candidates)**, **Employers/Recruiters**, and an **Administrator**.
 
@@ -200,7 +200,7 @@ Without Docker (XAMPP): drop/recreate `job_recruitment` in phpMyAdmin, then Impo
 
 ## 8. Setup Guide (XAMPP)
 
-### Step 1 — Clone the repository
+### Step 1 - Clone the repository
 ```bash
 git clone <your-repo-url>
 cd Job-Connect
@@ -211,15 +211,15 @@ Or copy the project into:
 C:\xampp\htdocs\Job-Connect
 ```
 
-### Step 2 — Start Apache + MySQL
+### Step 2 - Start Apache + MySQL
 Open **XAMPP Control Panel** → Start **Apache** and **MySQL**.
 
-### Step 3 — Import `database.sql`
+### Step 3 - Import `database.sql`
 1. Open [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
 2. **Import** → choose `database.sql`
 3. Click **Go**
 
-### Step 4 — Configure DB (if needed)
+### Step 4 - Configure DB (if needed)
 Edit `includes/config.php`:
 ```php
 define('DB_HOST', 'localhost');
@@ -228,7 +228,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');   // empty by default on XAMPP
 ```
 
-### Step 5 — Run
+### Step 5 - Run
 ```
 http://localhost/Job-Connect/
 ```
@@ -237,7 +237,7 @@ http://localhost/Job-Connect/
 
 ## 9. Setup with Docker + Next.js (recommended)
 
-### Terminal 1 — Laravel API + MySQL (+ classic PHP)
+### Terminal 1 - Laravel API + MySQL (+ classic PHP)
 ```bash
 docker compose up -d
 ```
@@ -250,7 +250,7 @@ Quick check:
 curl http://localhost:8000/api/home
 ```
 
-### Terminal 2 — Next.js frontend
+### Terminal 2 - Next.js frontend
 ```bash
 cd frontend
 copy .env.local.example .env.local
@@ -312,4 +312,4 @@ Suggested branches:
 
 ## License
 
-Academic / educational project — free to use and modify for college presentations.
+Academic / educational project - free to use and modify for college presentations.
